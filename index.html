@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+</head>
+<link rel="stylesheet" type="text/css" href="./style/bootstrap.min.css">
+<body>
+<div style="width: 500px; margin: 20px;">
+	<div class="select-input select-input-default" data-relation="relation" >
+        <span class="select-close"></span>
+	    <input type="text" placeholder="下拉一 (与下拉二关联)" class="select-input-col"  name="" autocomplete="off" />
+	    <ul class="select-drapdown">
+	    	<li data-value="123" data-title="123++">
+	            <span class="select-col-4">123</span>
+	            <span class="select-col-3">123</span>
+	            <span class="select-col-3">123</span>
+	        </li>
+	        <li  data-value="456" data-title="456++">
+	            <span class="select-col-4">456</span>
+	            <span class="select-col-3">456</span>
+	            <span class="select-col-3">456</span>
+	        </li>
+	        <li  data-value="jqk" data-title="jqk++">
+	            <span class="select-col-4">jqk</span>
+	            <span class="select-col-3">jqk</span>
+	            <span class="select-col-3">jqk</span>
+	        </li>
+	        
+	    </ul>
+    </div>
+</div>
+<div style="width: 500px; margin: 20px;">
+	<div class="select-input select-input-default" data-relation="relation">
+	    <span class="select-close"></span>
+	    <input type="text" placeholder="下拉二 (与下拉一关联)" class="select-input-col"  name="" autocomplete="off" />
+	    <ul class="select-drapdown">
+	    	<li  data-value="123" data-title="123+">
+	            <span class="select-col-4">123</span>
+	            <span class="select-col-3">123</span>
+	            <span class="select-col-3">123</span>
+	        </li>
+	        <li  data-value="456" data-title="456+" data-abc="ddddd">
+	            <span class="select-col-4">456</span>
+	            <span class="select-col-3">456</span>
+	            <span class="select-col-3">456</span>
+	        </li>
+	        <li  data-value="567" data-title="567+">
+	            <span class="select-col-4">567</span>
+	            <span class="select-col-3">567</span>
+	            <span class="select-col-3">567</span>
+	        </li>
+	        <li  data-value="789"  data-title="789+">
+	            <span class="select-col-4">789</span>
+	            <span class="select-col-3">789</span>
+	            <span class="select-col-3">789</span>
+	        </li>
+	    </ul>
+    </div>
+    
+</div>
+
+<div style="width: 500px; margin: 20px;">
+	<div class="select-input select-input-default">
+	    <span class="select-close"></span>
+	    <input type="text" placeholder="下拉三 (独立)" class="select-input-col"  name="" autocomplete="off" />
+	    <ul class="select-drapdown">
+	    	<li  data-value="123">
+	            <span class="select-col-4">123</span>
+	            <span class="select-col-3">123</span>
+	            <span class="select-col-3">123</span>
+	        </li>
+	        <li  data-value="456">
+	            <span class="select-col-4">456</span>
+	            <span class="select-col-3">456</span>
+	            <span class="select-col-3">456</span>
+	        </li>
+	        
+	        <li  data-value="789">
+	            <span class="select-col-4">789</span>
+	            <span class="select-col-3">789</span>
+	            <span class="select-col-3">789</span>
+	        </li>
+	    
+	    </ul>
+    </div>
+</div>
+
+
+<div style="width: 500px; margin: 20px;">
+	<div class="select-input select-input-json">
+	    <span class="select-close"></span>
+	    <input type="text" placeholder="根据json数据渲染下拉" class="select-input-col"  name="" autocomplete="off" />
+	    <ul class="select-drapdown"></ul>
+    </div>
+</div>
+
+<div style="width: 500px; margin: 20px;">
+    <div class="select-input select-input-ajax">
+        <div class="select-load">
+            <div class="line">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="circlebg"></div>
+        </div>
+        <span class="select-close"></span>
+        <input type="text" placeholder="异步获取下拉数据" class="select-input-col"  name="" autocomplete="off" />
+        <ul class="select-drapdown"></ul>
+    </div>
+</div>
+
+</body>
+<script src="./js/jquery.js"></script>
+
+<script type="text/javascript">
+
+    // let def = new selectDown('.select-input-default', {
+	// 	disabled : [],
+	// 	disableClass : ['abc'],
+	// 	callback : (data) => {
+	// 		console.log(data)
+	// 	}
+	// });
+
+    let json = new selectDown('.select-input-json', {
+        data : [
+            {
+				value : '1',
+				title : '1',
+                class : 'select-title',
+                child : [
+                    {
+                        text : '1',
+                        class : 'select-col-4'
+                    },
+                    {
+                        text : '1',
+                        class : 'select-col-3'
+                    },
+                    {
+                        text : '1',
+                        class : 'select-col-3'
+                    }
+                ]
+            },
+            {
+				value : '3',
+				title : '3',
+                child : [
+                    {
+                        text : '3',
+                        class : 'select-col-4'
+                    },
+                    {
+                        text : '3',
+                        class : 'select-col-3'
+                    },
+                    {
+                        text : '3',
+                        class : 'select-col-3'
+                    }
+                ]
+			},
+			{
+				value : '4',
+				title : '4',
+                child : [
+                    {
+                        text : '4',
+                        class : 'select-col-4'
+                    },
+                    {
+                        text : '4',
+                        class : 'select-col-3'
+                    },
+                    {
+                        text : '4',
+                        class : 'select-col-3'
+                    }
+                ]
+			},
+			{
+				value : '5',
+				title : '5',
+                child : [
+                    {
+                        text : '5',
+                        class : 'select-col-4'
+                    },
+                    {
+                        text : '5',
+                        class : 'select-col-3'
+                    },
+                    {
+                        text : '5',
+                        class : 'select-col-3'
+                    }
+                ]
+            }            
+			      
+        ],
+        type : 2
+	});
+	
+	// let _ajax = new selectDown('.select-input-ajax', {
+	// 	type : 3,
+	// 	ajax : function(keys, _t, _success, _fail){
+	// 		setTimeout(function (){
+	// 			$.ajax({
+	// 				url : 'http://jia.one.com',
+	// 				success : function(res){
+	// 					_success(JSON.parse(res), _t);
+	// 				},
+	// 				data : {
+	// 					type : keys
+	// 				},
+	// 				fail : function(){
+	// 					_fail(_t)
+	// 				}
+	// 			});
+	// 		}, 500);
+	// 	}
+	// });
+
+	
+</script>
+</html>
