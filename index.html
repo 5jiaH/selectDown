@@ -65,18 +65,18 @@
 	    <span class="select-close"></span>
 	    <input type="text" placeholder="下拉三 (独立)" class="select-input-col"  name="" autocomplete="off" />
 	    <ul class="select-drapdown">
-	    	<li  data-value="123">
+	    	<li  data-value="123" data-title="123-">
 	            <span class="select-col-4">123</span>
 	            <span class="select-col-3">123</span>
 	            <span class="select-col-3">123</span>
 	        </li>
-	        <li  data-value="456">
+	        <li  data-value="456" data-title="456-">
 	            <span class="select-col-4">456</span>
 	            <span class="select-col-3">456</span>
 	            <span class="select-col-3">456</span>
 	        </li>
 	        
-	        <li  data-value="789">
+	        <li  data-value="789" data-title="789-">
 	            <span class="select-col-4">789</span>
 	            <span class="select-col-3">789</span>
 	            <span class="select-col-3">789</span>
@@ -119,15 +119,16 @@
 
 <script type="text/javascript">
 
-    // let def = new selectDown('.select-input-default', {
-	// 	disabled : [],
-	// 	disableClass : ['abc'],
-	// 	callback : (data) => {
-	// 		console.log(data)
-	// 	}
-	// });
+    let def = new selectDown('.select-input-default', {
+		disabled : [],
+		disableClass : ['abc'],
+		callback : (data) => {
+			console.log(data)
+		}
+	});
 
     let json = new selectDown('.select-input-json', {
+		disabled : ['3'],
         data : [
             {
 				value : '1',
@@ -201,31 +202,31 @@
                         class : 'select-col-3'
                     }
                 ]
-            }            
-			      
+            }               
         ],
         type : 2
 	});
 	
-	// let _ajax = new selectDown('.select-input-ajax', {
-	// 	type : 3,
-	// 	ajax : function(keys, _t, _success, _fail){
-	// 		setTimeout(function (){
-	// 			$.ajax({
-	// 				url : 'http://jia.one.com',
-	// 				success : function(res){
-	// 					_success(JSON.parse(res), _t);
-	// 				},
-	// 				data : {
-	// 					type : keys
-	// 				},
-	// 				fail : function(){
-	// 					_fail(_t)
-	// 				}
-	// 			});
-	// 		}, 500);
-	// 	}
-	// });
+	let _ajax = new selectDown('.select-input-ajax', {
+		disabled : ['3'],
+		type : 3,
+		ajax : function(keys, _t, _success, _fail){
+			setTimeout(function (){
+				$.ajax({
+					url : 'http://jia.one.com',
+					success : function(res){
+						_success(JSON.parse(res), _t);
+					},
+					data : {
+						type : keys
+					},
+					fail : function(){
+						_fail(_t)
+					}
+				});
+			}, 500);
+		}
+	});
 
 	
 </script>

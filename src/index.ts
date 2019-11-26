@@ -442,6 +442,7 @@ class selectDown {
 
             _singlekey++;
 
+            
             // 如果type=2 则行一次渲染
             if(_that.options['type'] == 2){
                 _that.render(cur);
@@ -522,7 +523,6 @@ class selectDown {
                 }
 
                 _data.push(curItem);
-
             })
         }
 
