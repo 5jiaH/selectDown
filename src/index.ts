@@ -9,6 +9,7 @@ import {$, is_that, DeepExtend, randerDOM} from './javascript/tools';
 
 class selectDown {
 
+    public demo: any;
     // 父级节点
     private nodes: any;
 
@@ -51,7 +52,113 @@ class selectDown {
         this.options = DeepExtend(this.options, options);
 
         this.init();
-        return this;
+    }
+
+    /**
+     * 初始化功能
+     */
+    private init (): void{
+        
+        let _index: number = 1;
+        let _singlekey: number = 1;
+        let _sign: object = {}   // 标记有关联的下拉框
+        let _that = this;
+        
+        _that.otherEvent();
+
+        Array.prototype.forEach.call(_that.nodes, (cur:any) => {
+
+            // 获取下拉项
+            let childList = $(_that.options['childListClass'] + ' li', cur);
+
+            // 获取关联标记
+            let is_sign: any = cur.getAttribute('data-relation');
+
+            // 给下拉框添加唯一标记
+            let sk: string = 'select_' + _singlekey;
+            cur.setAttribute('data-key', sk);
+
+            let _data: object = _that.getData(childList);
+
+            
+            /* 给下拉框添加分组标记 */
+
+            if(!!is_sign){
+                if( _sign.hasOwnProperty(is_sign)){
+                    cur.setAttribute('data-sign', _sign[is_sign]);
+
+                    _that.store[_sign[is_sign]][sk] = {
+                        disabled : _that.options['disabled'],
+                        _a : [],  //  增加的禁用
+                        _d : [],  //  删除的禁用
+                        del : [],
+                        ev : cur,
+                        lists : _data,
+                        selected : ''
+                    }
+                }else{
+                    _sign[is_sign] = _index;
+                    cur.setAttribute('data-sign',_index);
+
+                    _that.store[_index] = {
+                        [sk] : {
+                            disabled : _that.options['disabled'],
+                            _a : [],  //  增加的禁用
+                            _d : [],  //  删除的禁用
+                            ev : cur,
+                            del : [],
+                            lists : _data,
+                            selected : ''
+                        }
+                    }
+
+                    _index++;
+                }
+            }else{
+                cur.setAttribute('data-sign', _index);
+
+                _that.store[_index] = {
+                    [sk] : {
+                        disabled :  _that.options['disabled'],
+                        _a : [],  //  增加的禁用
+                        _d : [],  //  删除的禁用
+                        ev : cur,
+                        del : [],
+                        lists : _data,
+                        selected : ''
+                    }
+                }
+
+                _index++;
+            }
+
+            _singlekey++;
+
+            
+            // 如果type=2 则行一次渲染
+            if(_that.options['type'] == 2){
+                _that.render(cur);
+
+            }else if(_that.options['type'] == 1 && _that.options['disabled'].length){
+
+                Array.prototype.forEach.call(childList, (cur: any, index: number) => {
+                    let {value} = cur.dataset;
+                    if(_that.options['disabled'].indexOf(value) >= 0){
+                        cur.classList.add('disabled');
+                    }
+                })
+                
+            }
+
+            /* 给input框添加输入事件 */
+           _that.addInputEvent(cur);
+
+            /* 添加点击事件 */
+            cur.addEventListener('click', (e: any) => {
+                _that.eventClick(e);
+                e.stopPropagation();
+            }, false)
+        })
 
     }
 
@@ -174,6 +281,7 @@ class selectDown {
         _that.store[sign][key]['_d'] = [];
 
     }
+    
 
     private json2arr(obj: object, key: number | string): any[]{
         let result: any[] = [];
@@ -363,110 +471,6 @@ class selectDown {
 
         return false;
        
-    }
-
-    private init (): void{
-        
-        let _index: number = 1;
-        let _singlekey: number = 1;
-        let _sign: object = {}   // 标记有关联的下拉框
-        let _that = this;
-        
-        _that.otherEvent();
-
-        Array.prototype.forEach.call(_that.nodes, (cur:any) => {
-
-            // 获取下拉项
-            let childList = $(_that.options['childListClass'] + ' li', cur);
-
-            // 获取关联标记
-            let is_sign: any = cur.getAttribute('data-relation');
-
-            // 给下拉框添加唯一标记
-            let sk: string = 'select_' + _singlekey;
-            cur.setAttribute('data-key', sk);
-
-            let _data: object = _that.getData(childList);
-
-            
-            /* 给下拉框添加分组标记 */
-
-            if(!!is_sign){
-                if( _sign.hasOwnProperty(is_sign)){
-                    cur.setAttribute('data-sign', _sign[is_sign]);
-
-                    _that.store[_sign[is_sign]][sk] = {
-                        disabled : _that.options['disabled'],
-                        _a : [],  //  增加的禁用
-                        _d : [],  //  删除的禁用
-                        del : [],
-                        ev : cur,
-                        lists : _data,
-                        selected : ''
-                    }
-                }else{
-                    _sign[is_sign] = _index;
-                    cur.setAttribute('data-sign',_index);
-
-                    _that.store[_index] = {
-                        [sk] : {
-                            disabled : _that.options['disabled'],
-                            _a : [],  //  增加的禁用
-                            _d : [],  //  删除的禁用
-                            ev : cur,
-                            del : [],
-                            lists : _data,
-                            selected : ''
-                        }
-                    }
-
-                    _index++;
-                }
-            }else{
-                cur.setAttribute('data-sign', _index);
-
-                _that.store[_index] = {
-                    [sk] : {
-                        disabled :  _that.options['disabled'],
-                        _a : [],  //  增加的禁用
-                        _d : [],  //  删除的禁用
-                        ev : cur,
-                        del : [],
-                        lists : _data,
-                        selected : ''
-                    }
-                }
-
-                _index++;
-            }
-
-            _singlekey++;
-
-            
-            // 如果type=2 则行一次渲染
-            if(_that.options['type'] == 2){
-                _that.render(cur);
-
-            }else if(_that.options['type'] == 1 && _that.options['disabled'].length){
-
-                Array.prototype.forEach.call(childList, (cur: any, index: number) => {
-                    let {value} = cur.dataset;
-                    if(_that.options['disabled'].indexOf(value) >= 0){
-                        cur.classList.add('disabled');
-                    }
-                })
-                
-            }
-
-            /* 给input框添加输入事件 */
-           _that.addInputEvent(cur);
-
-            /* 添加点击事件 */
-            cur.addEventListener('click', (e: any) => {
-                _that.eventClick(e);
-                e.stopPropagation();
-            }, false)
-        })
     }
 
     /**
