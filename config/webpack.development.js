@@ -17,7 +17,8 @@ module.exports = {
 	//* 出口文件 *//
 	output : {
 		filename : '[name].[hash].js',
-		path : path.resolve(__dirname, 'dist/js/')
+		path : path.resolve(__dirname, 'dist/js/'),
+		library: "selectDown"
 	},
 	resolve : {
 		extensions : ['.js', '.json', '.ts']
@@ -63,11 +64,11 @@ module.exports = {
 				loader: 'babel-loader'
 			},
 			{
-                test: /(\.woff)|(\.ttf)$/,
+                test: /(\.woff)|(\.ttf)|(\.eot)|(\.svg)|(\.woff2)$/,
                 use:{
                     loader: 'file-loader',
                     options:{
-                        name: '[path][name]_[hash].[ext]',
+                        name: '[path][name].[ext]',
                         outputPath: '',
                         publicPath: ''
                     }
@@ -77,7 +78,7 @@ module.exports = {
 				test : /\.tsx?$/,
 				use : 'ts-loader'
 				
-			},
+			}
 		]
 	},
 	plugins : [
@@ -91,7 +92,8 @@ module.exports = {
 		}),
 	],
 	devServer : {
-		contentBase : false, // path.join(__dirname, 'dist'),
+		//contentBase : false, // path.join(__dirname, 'dist'),
+		contentBase: path.join(__dirname, "../dist"),
 		compress : true,     // 一切服务都启用gzip 压缩：
 		port : 9000,
 		clientLogLevel : 'warning',  // 当使用内联模式(inline mode)时，在开发工具(DevTools)的控制台(console)将显示消息
